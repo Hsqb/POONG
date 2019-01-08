@@ -5,7 +5,7 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     public float direction;
-    public float ballSpeed = 0.15F;
+    public float ballSpeed = 7;
     public float grade;
     public float b;
     // Start is called before the first frame update
@@ -17,19 +17,37 @@ public class Ball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = GetNewPosition();
+//        Debug.Log(direction+":"+ballSpeed+":"+ Time.deltaTime);
+        float x = transform.position.x + (direction * ballSpeed * Time.deltaTime);
+        transform.position = new Vector2(x, b + (x * grade));
     }
     void OnCollisionEnter2D(Collision2D coll)
     {
-        Debug.Log(coll.gameObject.tag);
+        //Debug.Log(coll.gameObject.tag);
         if(coll.gameObject.tag == "updown_wall"){
             grade *= -1;
             b = coll.contacts[0].point.y - ( grade * coll.contacts[0].point.x);
-        } else if(coll.gameObject.tag == "goal"){
-            Debug.Log("goal!");
-        }else{
+        } else if(coll.gameObject.tag == "1p_goal" || coll.gameObject.tag == "2p_goal")
+        {
+            if (coll.gameObject.tag == "1p_goal")
+            {
+                GameManager.instance.scoreUp(2);
+                direction = 1f;
+            }
+            else if (coll.gameObject.tag == "2p_goal")
+            {
+                GameManager.instance.scoreUp(1);
+                direction = -1f;
+            }
+            grade = 0f;
+            b = 0f;
+            transform.position = new Vector2(0, 0);
+            Debug.Log(coll.gameObject.ToString());
+            
+        }
+        else{
             direction *= -1;
-            Debug.Log("ball  OnCollisionEnter");
+            //Debug.Log("ball  OnCollisionEnter");
             grade = (coll.gameObject.transform.position.y - coll.contacts[0].point.y) /
             (coll.gameObject.transform.position.x - coll.contacts[0].point.x);
             if(grade > 1.5){
@@ -38,13 +56,8 @@ public class Ball : MonoBehaviour
                 grade = -1.5f;
             }
             b = coll.contacts[0].point.y - ( grade * coll.contacts[0].point.x);
-            Debug.Log("grade : " +grade);
+           // Debug.Log("grade : " +grade);
         }
-    }
-    Vector2 GetNewPosition()
-    {
-        float x = transform.position.x + (direction * ballSpeed);
-        return new Vector2( x , b + (x * grade));
     }
 }
 

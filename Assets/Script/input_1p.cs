@@ -14,11 +14,9 @@ public class input_1p : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float h = Input.GetAxisRaw("1P_Vertical") * Time.deltaTime * moveSpeed;
-        transform.position = new Vector3(transform.position.x, transform.position.y + h, transform.position.z);
-    }
-    void OnCollisionEnter2D()
-    {
-        Debug.Log("1p OnCollisionEnter");
+        float y = transform.position.y + Input.GetAxisRaw("1P_Vertical") * Time.deltaTime * moveSpeed;
+        y = y > 4.5f ? 4.5f : y;
+        y = y < -4.5f ? -4.5f : y;
+        transform.position = new Vector2(transform.position.x, y);
     }
 }

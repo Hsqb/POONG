@@ -6,6 +6,8 @@ TagManager:
   tags:
   - updown_wall
   - goal
+  - 1p_goal
+  - 2p_goal
   layers:
   - Default
   - TransparentFX

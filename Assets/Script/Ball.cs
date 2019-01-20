@@ -8,6 +8,7 @@ public class Ball : MonoBehaviour
     public float ballSpeed = 7;
     public float grade;
     public float b;
+    public bool isGaming = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,9 +18,12 @@ public class Ball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-//        Debug.Log(direction+":"+ballSpeed+":"+ Time.deltaTime);
-        float x = transform.position.x + (direction * ballSpeed * Time.deltaTime);
-        transform.position = new Vector2(x, b + (x * grade));
+        // Debug.Log(direction+":"+ballSpeed+":"+ Time.deltaTime);
+        if (isGaming)
+        {
+            float x = transform.position.x + (direction * ballSpeed * Time.deltaTime);
+            transform.position = new Vector2(x, b + (x * grade));
+        }
     }
     void OnCollisionEnter2D(Collision2D coll)
     {
@@ -43,7 +47,7 @@ public class Ball : MonoBehaviour
             b = 0f;
             transform.position = new Vector2(0, 0);
             Debug.Log(coll.gameObject.ToString());
-            
+
         }
         else{
             direction *= -1;
@@ -60,4 +64,3 @@ public class Ball : MonoBehaviour
         }
     }
 }
-

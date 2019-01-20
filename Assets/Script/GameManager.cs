@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 
     public int score1p=0;
     public int score2p=0;
+    Ball ball = GameObject.Find("ball").GetComponent<Ball>();
+
     public int[,] score1pMap = new int[5, 7] {  { 0,0,0,0,1,1,1 },
                                                 { 0,0,0,0,1,0,1 },
                                                 { 0,0,0,0,1,0,1 },
@@ -65,6 +67,10 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
+    public void Reset()
+    {
+        
     }
 
 }
